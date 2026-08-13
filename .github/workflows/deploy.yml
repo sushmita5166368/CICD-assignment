@@ -20,5 +20,7 @@ jobs:
 
       - name: Run tests
         working-directory: flask-app
+        env:
+          PYTHONPATH: .
         run: |
           pytest tests/

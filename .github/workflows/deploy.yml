@@ -19,5 +19,6 @@ jobs:
             pip install -r flask-app/requirements.txt
 
       - name: Run tests
+        working-directory: flask-app
         run: |
-          pytest flask-app/tests/
+          pytest tests/

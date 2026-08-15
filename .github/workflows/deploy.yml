@@ -46,7 +46,7 @@ jobs:
 
       - name: Deploy in EC2
         if: success()
-        uses: apple/boyssh-action@v1.2.2
+        uses: appleboy/ssh-action@v1.2.2
         env:
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
           IMAGE_TAG: ${{github.sha}}

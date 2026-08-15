@@ -77,7 +77,7 @@ jobs:
            sleep 10
 
            echo "checking container.."
-           docker ps --fliter "name=flask-app"
+           docker ps --filter "name=flask-app"
 
            echo "Checking application health .."
            curl --fail http:/localhost:5000/health

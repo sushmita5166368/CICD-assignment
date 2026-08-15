@@ -1,12 +1,11 @@
 ## Steps involved in Creating the CICD pipeline for this App
-# Create a Simple Flask app and Push in github
-# Create Docker file and pytest suite 
-# Create ECR repository and EC2 and apply the IAM rule 
-#Create A IAM user and assign the required roles
-# Create  PIPELINE for Pushing docker image on ECR
-#From ECR the image will be pushed to EC2 and create a container 
-# Notify over email for every push of ECR image to EC2
-
+Step1 :Create a Simple Flask app and Push in github
+Step2 :Create Docker file and pytest suite 
+Step3 :Create ECR repository and EC2 and apply the IAM rule 
+Step4 :Create A IAM user and assign the required roles
+Step5 :Create  PIPELINE for Pushing docker image on ECR
+Step6 :From ECR the image will be pushed to EC2 and create a container 
+Step7 :Notify over email for every push of ECR image to EC2
 
 ## Prerequisites
 # AWS services access

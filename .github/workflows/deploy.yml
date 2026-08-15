@@ -40,14 +40,9 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: PUSH to ECR Repo
-        env:
-          ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
         run: |
-          IMAGE_TAG=${{github.sha}}
-          docker tag public-repo:${{github.sha}} $ECR_REGISTRY/
-          public-repo:${{github.sha}}
-          docker push $EC_REGISTRY/
-          public-repo:${{github.sha}}
+          docker tag public-repo:${{github.sha}} ${{steps.login-ecr.outputs.registry}}/public-repo:${{github.sha}}
+          docker push ${{steps.login-ecr.outputs.registry}}/public-repo:${{github.sha}}
 
       
         

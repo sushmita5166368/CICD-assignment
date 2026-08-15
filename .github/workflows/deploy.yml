@@ -44,6 +44,47 @@ jobs:
           docker tag public-repo:${{github.sha}} ${{steps.login-ecr.outputs.registry}}/public-repo:${{github.sha}}
           docker push ${{steps.login-ecr.outputs.registry}}/public-repo:${{github.sha}}
 
+      - name: Deploy in EC2
+        if: success()
+        uses: apple/boyssh-action@v1.2.2
+        env:
+          ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
+          IMAGE_TAG: ${{github.sha}}
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username : ec2-user
+          key : ${{secrets.EC2_SSH_KEY}}
+          envs: ECR_REGISTRY, IMAGE_TAG
+          script: |
+           set -e
+           echo "Logging to ECR..."
+           aws ecr get-login-password --region us-east-1 | \
+           docker login --username AWS --password-stdin $ECR_REGISTRY/public-repo:$IMAGE_TAG
+
+           echo "Pulling New Image"
+           docker pull $ECR_REGISTRY/public-repo:$IMAGE_TAG
+
+           echo "Stopping old container.."
+           docker stop flask-app || true
+
+           echo "removing old container "
+           docker rm flask-app || true
+
+           echo "Starting new Container  .."
+           docker run -d \ --name flask-app \ -p 5000:5000 \ ECR_REGISTRY/public-repo:$IMAGE_TAG
+
+           echo "Waiting for application.."
+           sleep 10
+
+           echo "checking container.."
+           docker ps --fliter "name=flask-app"
+
+           echo "Checking application health .."
+           curl --fail http:/localhost:5000/health
+
+           echo "Deployment successful .."
+           
+           
       
         
          

@@ -43,8 +43,11 @@ jobs:
         env:
           ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
         run: |
-          docker tag public-repo:${{github.sha}} $ECR_REGISTRY/public-repo:${{github.sha}}
-          docker push $EC_REGISTRY/public-repo:${{github.sha}}
+          IMAGE_TAG=${{github.sha}}
+          docker tag public-repo:${{github.sha}} $ECR_REGISTRY/
+          public-repo:${{github.sha}}
+          docker push $EC_REGISTRY/
+          public-repo:${{github.sha}}
 
       
         

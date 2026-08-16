@@ -86,7 +86,7 @@ jobs:
 
       - name: Send Success Email
         if: ${{success() }}
-        uses: dawidd6/action-need-send-mail@v6
+        uses: dawidd6/action-send-mail@v6
         with:
           server_address: ${{secrets.SMTP_SERVER}}
           server_port : ${{secrets.SMTP_PORT}}
@@ -108,7 +108,7 @@ jobs:
 
       - name: Send Failure Email
         if: ${{failure()}}
-        uses: dawidd6/action-need-send-mail@v6
+        uses: dawidd6/action-send-mail@v6
         with:
           server_address: ${{secrets.SMTP_SERVER}}
           server_port : ${{secrets.SMTP_PORT}}

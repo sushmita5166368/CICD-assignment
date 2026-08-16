@@ -97,14 +97,14 @@ jobs:
           from : ${{secrets.EMAIL_FROM}}
           body : |  
             CI/CD PIPELINE SUCCESSFUL
-          Repository : ${{github.repository}}
-          Branch : ${{github.ref_name}}
-          Commit SHA : ${{github.sha}}
-          Docker Image : ${{secrets.ECR_REGISTRY}}/${{secrets.ECR_REPOSITORY}}:${{github.sha}}
-          ECR : Image Successfully pushed
-          EC2 Target : ${{secrets.EC2_HOST}}}
-          Deployment Status : Application Successfully Deployed to EC2
-          Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
+            Repository : ${{github.repository}}
+            Branch : ${{github.ref_name}}
+            Commit SHA : ${{github.sha}}
+            Docker Image : ${{secrets.ECR_REGISTRY}}/${{secrets.ECR_REPOSITORY}}:${{github.sha}}
+            ECR : Image Successfully pushed
+            EC2 Target : ${{secrets.EC2_HOST}}}
+            Deployment Status : Application Successfully Deployed to EC2
+            Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
 
       - name: Send Failure Email
         if: ${{failure()}}

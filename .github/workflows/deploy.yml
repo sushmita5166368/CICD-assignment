@@ -119,11 +119,11 @@ jobs:
           from : ${{secrets.EMAIL_FROM}}
           body : |  
             CI/CD PIPELINE FAILED
-          Repository : ${{github.repository}}
-          Branch : ${{github.ref_name}}
-          Commit SHA : ${{github.sha}}
-          Failed Stage : Please Check the Test/Build/Deploy stage in pipelibe stage 
-          Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}   
+            Repository : ${{github.repository}}
+            Branch : ${{github.ref_name}}
+            Commit SHA : ${{github.sha}}
+            Failed Stage : Please Check the Test/Build/Deploy stage in pipelibe stage 
+            Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}   
           
            
           

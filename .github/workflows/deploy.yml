@@ -18,7 +18,7 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r flask-app/requirements.txt
 
-      - name: PYtest
+      - name: Test
         working-directory: flask-app
         env:
           PYTHONPATH: .
@@ -83,6 +83,55 @@ jobs:
            curl --fail http:/localhost:5000/health
 
            echo "Deployment successful .."
+
+      - name: Send Success Email
+        if: ${{success() }}
+        uses: dawidd6/action-need-send-mail@v6
+        with:
+          server_address: ${{secrets.SMTP_SERVER}}
+          server_port : ${{secrets.SMTP_PORT}}
+          username : ${{secrets.SMTP_USERNAME}}
+          password : ${{secrets.SMTP_PASSWORD}}
+          subject : "SUCCESS: CI/CD deployment -${{github.repository }}"
+          to : ${{secrets.EMAIL_TO}}
+          from : ${{secrets.EMAIL_FROM}}
+          body : |  
+            CI/CD PIPELINE SUCCESSFUL
+          Repository : ${{github.repository}}
+          Branch : ${{github.ref_name}}
+          Commit SHA : ${{github.sha}}
+          Docker Image : ${{secrets.ECR_REGISTRY}}/${{secrets.ECR_REPOSITORY}}:${{github.sha}}
+          ECR : Image Successfully pushed
+          EC2 Target : ${{secrets.EC2_HOST}}}
+          Deployment Status : Application Successfully Deployed to EC2
+          Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
+
+      - name: Send Failure Email
+        if: ${{failure()}}
+        uses: dawidd6/action-need-send-mail@v6
+        with:
+          server_address: ${{secrets.SMTP_SERVER}}
+          server_port : ${{secrets.SMTP_PORT}}
+          username : ${{secrets.SMTP_USERNAME}}
+          password : ${{secrets.SMTP_PASSWORD}}
+          subject : "FAILED : CI/CD deployment -${{github.repository }}"
+          to : ${{secrets.EMAIL_TO}}
+          from : ${{secrets.EMAIL_FROM}}
+          body : |  
+            CI/CD PIPELINE FAILED
+          Repository : ${{github.repository}}
+          Branch : ${{github.ref_name}}
+          Commit SHA : ${{github.sha}}
+          Failed Stage : Please Check the Test/Build/Deploy stage in pipelibe stage 
+          Pipeline Run : ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}   
+          
+           
+          
+          
+       
+        
+
+           
            
            
       
